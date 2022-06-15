@@ -1,4 +1,5 @@
-**This is a QT implementation a QR code generator using the library provided by Nayuki, more info below. **
+**This is a QT implementation a QR code generator using the library provided by Nayuki, more info below.**
+
 I also have the deployed version uploaded in another folder, if you need it just download it and use it. 
 
 void paintQR(QPainter &painter, const QSize sz, const QString &data, QColor bg, QColor fg)
