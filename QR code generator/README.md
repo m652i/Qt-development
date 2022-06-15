@@ -2,46 +2,53 @@
 
 I also have the deployed version uploaded in another folder, if you need it just download it and use it. 
 
-void paintQR(QPainter &painter, const QSize sz, const QString &data, QColor bg, QColor fg)
-{
+Basically the function here makes everything work.
+From the QWidget you create (QMainWindow, QDialog, whatever that inherits QWidget), 
+use the paintEvent fuction to call this paintQR function I have wrote.
 
-    qrcodegen::QrCode qr = qrcodegen::QrCode::encodeText(data.toUtf8().constData(), qrcodegen::QrCode::Ecc::LOW);
+    void paintQR(QPainter &painter, const QSize sz, const QString &data, QColor bg, QColor fg)
+    {
+        //this code here turns the input into something like this => 1001010101010100000011110010
+        qrcodegen::QrCode qr = qrcodegen::QrCode::encodeText(data.toUtf8().constData(), qrcodegen::QrCode::Ecc::LOW);
 
-          //background color
-    painter.setBrush(bg);
-    painter.setPen(Qt::NoPen);
-    painter.drawRect(0,0,400,556);
+        //bg background color can be selected from the comboBox which I added to this project
+        //or you can just set it to QColor bg = ("white"); (for color names check here : https://www.w3.org/TR/SVG11/types.html#ColorKeywords)
+        
+        painter.setBrush(bg);     
+        painter.setPen(Qt::NoPen);
+        painter.drawRect(0,0,400,556);
 
-    const int s=qr.getSize()>0?qr.getSize():1;
-    const double w=sz.width();
-    const double h=sz.height();
-    const double aspect=w/h;
-    const double size=((aspect>1.0)?h:w);
-    const double scale=size/(s+2);
-
-    //明るいバックグラウンドは用意されないと、黒のピクセルだけ書きます。
-    //黒バックグラウンドと白QRテストしましたが、読めとれないです。
-
-    painter.setPen(Qt::NoPen);
-    painter.setBrush(fg);
-    for(int y=0; y<s; y++) {
-        for(int x=0; x<s; x++) {
-            const int color=qr.getModule(x, y);  // 0 for white, 1 for black
-            if(0!=color) {
-                const double rx1=(x+1)*scale, ry1=(y+1)*scale;
-                QRectF r(rx1, ry1, scale, scale);
-                painter.drawRects(&r,1);
+        const int s=qr.getSize()>0?qr.getSize():1;
+        const double w=sz.width();
+        const double h=sz.height();
+        const double aspect=w/h;
+        const double size=((aspect>1.0)?h:w);
+        const double scale=size/(s+2);
+        
+        //now this part paints the foreground of the QR code.
+        //Again for the color you can just set this to black if you do not wish to add color changing functions to your build.
+        //now we read the whatever 00101010101010000 and paint
+        
+        painter.setPen(Qt::NoPen);
+        painter.setBrush(fg);
+        for(int y=0; y<s; y++) {
+            for(int x=0; x<s; x++) {
+                const int color=qr.getModule(x, y);  // 0 for no draw, 1 for draw
+                if(0!=color) {
+                    const double rx1=(x+1)*scale, ry1=(y+1)*scale;
+                    QRectF r(rx1, ry1, scale, scale);
+                    painter.drawRects(&r,1);
+                }
             }
         }
     }
-}
 
 
-void MainWindow::paintEvent(QPaintEvent *)
-{
-    QPainter painter(this);
-    paintQR(painter,QSize(400,400),MainWindow::line->toPlainText(),bgColor->currentText(), fgColor->currentText());
-}
+    void MainWindow::paintEvent(QPaintEvent *)
+    {
+        QPainter painter(this);
+        paintQR(painter,QSize(400,400),MainWindow::line->toPlainText(),bgColor->currentText(), fgColor->currentText());
+    }
 
 
 
