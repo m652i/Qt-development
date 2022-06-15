@@ -5,7 +5,7 @@ I also have the deployed version uploaded in another folder, if you need it just
 Basically the function here makes everything work.
 From the QWidget you create (QMainWindow, QDialog, whatever that inherits QWidget), 
 use the paintEvent fuction to call this paintQR function I have wrote.
-
+```c++
     void paintQR(QPainter &painter, const QSize sz, const QString &data, QColor bg, QColor fg)
     {
         //this code here turns the input into something like this => 1001010101010100000011110010
@@ -49,7 +49,7 @@ use the paintEvent fuction to call this paintQR function I have wrote.
         QPainter painter(this);
         paintQR(painter,QSize(400,400),MainWindow::line->toPlainText(),bgColor->currentText(), fgColor->currentText());
     }
-
+```
 
 
 
