@@ -36,7 +36,8 @@ void paintQR(QPainter &painter, const QSize sz, const QString &data, QColor bg, 
         for(int x=0; x<s; x++) {
             const int color=qr.getModule(x, y);  // 0 for no draw, 1 for draw
             if(0!=color) {
-                const double rx1=(x+1)*scale, ry1=(y+1)*scale;
+                const double rx1=(x+1)*scale;
+                const double ry1=(y+1)*scale;
                 QRectF r(rx1, ry1, scale, scale);
                 painter.drawRects(&r,1);
             }
