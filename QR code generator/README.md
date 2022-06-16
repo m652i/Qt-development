@@ -13,7 +13,8 @@ void paintQR(QPainter &painter, const QSize sz, const QString &data, QColor bg, 
     //this code here turns the input into something like this => 1001010101010100000011110010
     qrcodegen::QrCode qr = qrcodegen::QrCode::encodeText(data.toUtf8().constData(), qrcodegen::QrCode::Ecc::LOW);
     //bg background color can be selected from the comboBox which I added to this project
-    //or you can just set it to QColor bg = ("white"); (for color names check here : https://www.w3.org/TR/SVG11/types.html#ColorKeywords)
+    //or you can just set it to QColor bg = ("white"); 
+    //(for color names check here : https://www.w3.org/TR/SVG11/types.html#ColorKeywords)
        
     painter.setBrush(bg);     
     painter.setPen(Qt::NoPen);
