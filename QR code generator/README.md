@@ -1,5 +1,7 @@
-**This is a QT implementation a QR code generator using the library provided by Nayuki, more info below.**
+**Colorful QR code generator**
 
+
+This is a QT implementation a QR code generator using the library provided by Nayuki, more info below.
 I also have the deployed version uploaded in another folder, if you need it just download it and use it. 
 
 Basically the function here makes everything work.
